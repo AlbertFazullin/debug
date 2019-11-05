@@ -8,25 +8,18 @@ const Spaced = styled.div`
 class Timer extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            time: props.timer,
-        };
+        this.timer = setInterval(() => {
+            this.props.onIncr(this.props.index, this.props.timer - 1);
+        }, 1000);
     }
 
-    componentDidMount() {
-        setTimeout(() => {
-            this.props.onEnd(this.props.index);
-        }, 5000);
-        setInterval(() => {
-            this.setState({
-                time: this.state.time - 1,
-            })
-        }, 1000);
+    componentWillUnmount() {
+        clearInterval(this.timer);
     }
 
     render() {
         return (
-            <Spaced>{this.state.time} s.</Spaced>
+            <Spaced>{this.props.timer} s.</Spaced>
         )
     }
 }
