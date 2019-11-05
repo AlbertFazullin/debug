@@ -11,17 +11,21 @@ class Timer extends React.Component {
         this.state = {
             time: props.timer,
         };
-    }
-
-    componentDidMount() {
-        setTimeout(() => {
-            this.props.onEnd(this.props.index);
-        }, 5000);
-        setInterval(() => {
+        this.timer = setInterval(() => {
             this.setState({
                 time: this.state.time - 1,
             })
         }, 1000);
+    }
+
+    componentDidMount() {
+        setTimeout(() => {
+            this.props.onEnds(this.props.index);
+        }, 5000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timer);
     }
 
     render() {
